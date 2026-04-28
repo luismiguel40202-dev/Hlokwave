@@ -6,39 +6,81 @@
     <link rel="manifest" href="manifest.json">
     <title>Hlokwave App</title>
     <style>
-        body { background: #000; color: white; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-        .app-card { background: #111; padding: 30px; border-radius: 25px; border: 1px solid #00ff88; width: 85%; max-width: 400px; text-align: center; box-shadow: 0 0 20px rgba(0,255,136,0.2); }
-        h1 { color: #00ff88; letter-spacing: 2px; margin-bottom: 5px; }
-        p { color: #888; font-size: 0.9rem; margin-bottom: 20px; }
-        input { width: 100%; padding: 15px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #222; color: white; box-sizing: border-box; outline: none; }
+        body { background: #000; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; overflow: hidden; }
+        
+        /* Pantalla de Registro */
+        #registro-page { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+        .app-card { background: #111; padding: 30px; border-radius: 25px; border: 1px solid #00ff88; width: 85%; max-width: 400px; text-align: center; }
+        
+        /* Pantalla Principal (Oculta al principio) */
+        #main-app { display: none; height: 100vh; flex-direction: column; }
+        .header { background: #111; padding: 20px; border-bottom: 1px solid #00ff88; text-align: center; color: #00ff88; font-weight: bold; }
+        .content { padding: 20px; flex: 1; overflow-y: auto; text-align: center; }
+        
+        input { width: 100%; padding: 15px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #222; color: white; box-sizing: border-box; }
         button { width: 100%; padding: 15px; background: #00ff88; border: none; border-radius: 10px; font-weight: bold; color: black; margin-top: 10px; cursor: pointer; }
+        
+        .menu-item { background: #111; margin: 10px 0; padding: 20px; border-radius: 15px; border-left: 5px solid #00ff88; text-align: left; }
     </style>
 </head>
 <body>
 
-    <div class="app-card">
-        <h1>HLOKWAVE</h1>
-        <p>SISTEMA DE REGISTRO</p>
-        <input type="text" id="nombre" placeholder="Nombre completo">
-        <input type="email" id="correo" placeholder="Correo electrónico">
-        <input type="password" id="pass" placeholder="Contraseña">
-        <button onclick="registrar()">CREAR CUENTA</button>
+    <div id="registro-page">
+        <div class="app-card">
+            <h1 style="color:#00ff88">HLOKWAVE</h1>
+            <p>CREAR CUENTA PROFESIONAL</p>
+            <input type="text" id="nombre" placeholder="Nombre Artístico">
+            <input type="email" id="correo" placeholder="Correo Electrónico">
+            <input type="password" id="pass" placeholder="Contraseña">
+            <button onclick="irApp()">CREAR CUENTA</button>
+        </div>
+    </div>
+
+    <div id="main-app">
+        <div class="header">HLOKWAVE DASHBOARD</div>
+        <div class="content">
+            <h2 id="bienvenida">¡Bienvenido!</h2>
+            
+            <div class="menu-item">
+                <h4 style="margin:0; color:#00ff88;">🎵 MI MÚSICA</h4>
+                <p style="font-size:0.8rem; color:#888;">Gestiona tus lanzamientos y álbumes.</p>
+            </div>
+
+            <div class="menu-item">
+                <h4 style="margin:0; color:#00ff88;">📈 ESTADÍSTICAS</h4>
+                <p style="font-size:0.8rem; color:#888;">Mira quién escucha tu música hoy.</p>
+            </div>
+
+            <div class="menu-item">
+                <h4 style="margin:0; color:#00ff88;">💰 MONETIZACIÓN</h4>
+                <p style="font-size:0.8rem; color:#888;">Configura tus pagos de regalías.</p>
+            </div>
+
+            <button onclick="location.reload()" style="background:#444; color:white;">CERRAR SESIÓN</button>
+        </div>
     </div>
 
     <script>
+        // Registrar motor Sw.js
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('Sw.js');
         }
 
-        function registrar() {
+        // Función para cambiar de pantalla
+        function irApp() {
             const user = document.getElementById('nombre').value;
-            if(user) {
-                alert('Hlokwave: Registro exitoso para ' + user);
-            } else {
-                alert('Ingresa tus datos');
+            const mail = document.getElementById('correo').value;
+
+            if(user === "" || mail === "") {
+                alert("Por favor, llena todos los campos");
+                return;
             }
+
+            // Efecto de carga
+            document.getElementById('registro-page').style.display = 'none';
+            document.getElementById('main-app').style.display = 'flex';
+            document.getElementById('bienvenida').innerText = "¡Bienvenido, " + user + "!";
         }
     </script>
-
 </body>
 </html>
