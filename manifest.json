@@ -1,0 +1,16 @@
+{
+  "name": "Hlokwave Professional",
+  "short_name": "Hlokwave",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#00ff88",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2583/2583151.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
